@@ -1,13 +1,30 @@
 // @flow
 import React, { Component } from 'react';
 import { translate } from 'react-i18next';
+import { find } from 'lodash';
 
-import { Container, Icon, Header, Segment, Table } from 'semantic-ui-react';
+import { Container, Icon, Header, Message, Segment, Table } from 'semantic-ui-react';
 
 import ToolsModalPermissionAuth from './Modal/Permissions/Auth';
 import WalletPanelLocked from '../Wallet/Panel/Locked';
 
 class ToolsPermissions extends Component<Props> {
+  getAuthorization(account, pubkey) {
+    if (account) {
+      // Find the matching permission
+      const permission = find(account.permissions, (perm) =>
+        find(perm.required_auth.keys, (key) => key.key === pubkey));
+      if (permission) {
+        // Return an authorization for this key
+        return {
+          actor: account.account_name,
+          permission: permission.perm_name
+        };
+      }
+    }
+    return undefined;
+  }
+
   render() {
     const {
       accounts,
@@ -41,8 +58,7 @@ class ToolsPermissions extends Component<Props> {
     if (!account) return false;
 
     const { pubkey } = keys;
-
-    // console.table(keys)
+    const authorization = this.getAuthorization(account, pubkey);
 
     return (
       <Segment basic>
@@ -74,15 +90,34 @@ class ToolsPermissions extends Component<Props> {
             textAlign="left"
           />
         </Container>
+        <Message
+          content={t('tools_permissions_info_content')}
+          header={t('tools_permissions_info_header')}
+          icon="info circle"
+          info
+        />
         <Segment
           color="blue"
         >
-          <Header
-            content={t('tools_permissions_current_wallet_header', { pubkey })}
-            icon="key"
-            size="small"
-            subheader={t('tools_permissions_current_wallet_subheader')}
-          />
+          {(settings.walletMode === 'watch')
+            ? (
+              <Header
+                color="orange"
+                content={t('tools_permissions_current_wallet_watch_header')}
+                icon="eye"
+                size="small"
+                subheader={t('tools_permissions_current_wallet_watch_subheader')}
+              />
+            )
+            : (
+              <Header
+                content={t('tools_permissions_current_wallet_header', { pubkey })}
+                icon="key"
+                size="small"
+                subheader={t('tools_permissions_current_wallet_subheader')}
+              />
+            )
+          }
         </Segment>
 
         {(account.permissions.map((data) => (
@@ -90,23 +125,32 @@ class ToolsPermissions extends Component<Props> {
             color="purple"
             key={`${account}-${data.perm_name}`}
           >
-            <ToolsModalPermissionAuth
-              actions={actions}
-              auth={data}
-              blockExplorers={blockExplorers}
-              button={{
-                color: 'grey',
-                content: t('tools_modal_permissions_auth_edit_button'),
-                fluid: false,
-                floated: 'right',
-                icon: 'pencil',
-                size: 'small'
-              }}
-              onClose={this.onClose}
-              pubkey={pubkey}
-              settings={settings}
-              system={system}
-            />
+            {(
+              !authorization
+              || (data.perm_name === 'owner' && authorization.permission === 'owner')
+              || (data.perm_name !== 'owner')
+            )
+              ? (
+                <ToolsModalPermissionAuth
+                  actions={actions}
+                  auth={data}
+                  blockExplorers={blockExplorers}
+                  button={{
+                    color: 'grey',
+                    content: t('tools_modal_permissions_auth_edit_button'),
+                    fluid: false,
+                    floated: 'right',
+                    icon: 'pencil',
+                    size: 'small'
+                  }}
+                  onClose={this.onClose}
+                  pubkey={pubkey}
+                  settings={settings}
+                  system={system}
+                />
+              )
+              : false
+            }
             <Header floated="left" size="medium">
               <Icon name="lock" />
               <Header.Content>
@@ -125,8 +169,10 @@ class ToolsPermissions extends Component<Props> {
             </Header>
             <Table>
               <Table.Header>
-                <Table.HeaderCell textAlign="right">Weight</Table.HeaderCell>
-                <Table.HeaderCell>Permission</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell textAlign="right">Weight</Table.HeaderCell>
+                  <Table.HeaderCell>Permission</Table.HeaderCell>
+                </Table.Row>
               </Table.Header>
               <Table.Body>
                 {data.required_auth.accounts.map((permission) => (
