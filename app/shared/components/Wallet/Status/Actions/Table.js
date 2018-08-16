@@ -19,7 +19,31 @@ class WalletStatusActionsTable extends Component<Props> {
     const loading = (actionHistory.list.length < 1);
     let baseTable = <Table.Body />;
     if (!loading) {
-      const fullResults = actionHistory.list.slice(0, amount);
+      let fullResults = actionHistory.list.slice(0, amount);
+
+      if (settings.filterSpamTransfersUnder !== 0.0000) {
+        fullResults = fullResults.filter(action => {
+          const {
+            act
+          } = action.action_trace;
+
+          if (act.name !== 'transfer') {
+            return true;
+          }
+
+          const {
+            from,
+            quantity
+          } = act.data;
+
+          if (Number(quantity) > settings.filterSpamTransfersUnder || from === settings.account) {
+            return true;
+          }
+
+          return false;
+        });
+      }
+
       baseTable = (
         <Table.Body key="FullResults">
           {fullResults.map((action) => (
