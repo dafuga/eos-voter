@@ -27,6 +27,7 @@ import ToolsStateWallet from '../components/Tools/State/Wallet';
 import ToolsWallets from '../components/Tools/Wallets';
 
 import * as AccountsActions from '../actions/accounts';
+import * as BidNameActions from '../actions/system/bidname';
 import * as ContractsActions from '../actions/contracts';
 import * as CreateAccountActions from '../actions/createaccount';
 import * as CustomTokensActions from '../actions/customtokens';
@@ -221,6 +222,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       ...AccountsActions,
+      ...BidNameActions,
       ...ContractsActions,
       ...CreateAccountActions,
       ...CustomTokensActions,
