@@ -77,7 +77,7 @@ class WelcomeKeyContainer extends Component<Props> {
       }
       case 'watch': {
         // Import the watch wallet
-        importWallet(settings.account, authorization, false, false, 'watch');
+        importWallet(settings.account, authorization,  settings.blockchain,  false, false, 'watch');
         // Set this wallet as the used wallet
         useWallet(settings.account, 'active');
         // Initialize the wallet setting

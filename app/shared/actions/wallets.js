@@ -14,6 +14,7 @@ const CryptoJS = require('crypto-js');
 export function completeConvertToLedger(
   account,
   authorization,
+  blockchain,
   publicKey,
   path,
 ) {
@@ -25,6 +26,7 @@ export function completeConvertToLedger(
     dispatch(importWallet(
       account,
       authorization,
+      blockchain,
       false,
       false,
       'ledger',
@@ -80,6 +82,7 @@ export function prepareConvertToLedgerAbort(
 export function importWallet(
   account,
   authorization = false,
+  blockchain,
   key = false,
   password = false,
   mode = 'hot',
@@ -111,6 +114,7 @@ export function importWallet(
       payload: {
         account,
         accountData,
+        blockchain,
         authorization,
         data,
         mode,
@@ -124,13 +128,14 @@ export function importWallet(
 export function importWallets(
   accounts,
   authorization = false,
+  blockchain,
   key = false,
   password = false,
   mode = 'hot'
 ) {
   return (dispatch: () => void) =>
     forEach(accounts, (account) =>
-      dispatch(importWallet(account, authorization, key, password, mode)));
+      dispatch(importWallet(account, authorization, blockchain, key, password, mode)));
 }
 
 export function removeWallet(account, authorization) {

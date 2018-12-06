@@ -13,11 +13,19 @@ class WalletPanelModalAccountRequestImport extends Component<Props> {
       actions,
       history,
       keys,
+      settings,
       values
     } = this.props;
     // TODO - allow setting
     const authorization = 'active';
-    actions.importWallet(values.accountName, authorization, keys.active, values.password, 'wait');
+    actions.importWallet(
+      values.accountName,
+      authorization,
+      settings.blockchain,
+      keys.active,
+      values.password,
+      'wait'
+    );
     actions.setSetting('account', values.accountName);
     actions.setSetting('walletInit', true);
     actions.setWalletKey(keys.active, values.password, 'wait');
