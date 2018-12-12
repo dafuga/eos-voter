@@ -90,7 +90,7 @@ export function importWallet(
   path = undefined,
 ) {
   return (dispatch: () => void, getState) => {
-    const { accounts, settings } = getState();
+    const { accounts, connection, settings } = getState();
     const data = (key && password) ? encrypt(key, password) : undefined;
     const accountData = accounts[account];
     let pubkey = (key) ? ecc.privateToPublic(key) : publicKey;
@@ -114,7 +114,7 @@ export function importWallet(
       payload: {
         account,
         accountData,
-        blockchain,
+        blockchain: connection.chainKey,
         authorization,
         data,
         mode,
