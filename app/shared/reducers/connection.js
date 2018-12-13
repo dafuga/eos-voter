@@ -18,7 +18,8 @@ const initialState = {
   sign: false,
   signMethod: false,
   signPath: false,
-  supportedContracts: []
+  supportedContracts: [],
+  supportedFeatures: []
 };
 
 export default function connection(state = initialState, action) {
@@ -29,9 +30,8 @@ export default function connection(state = initialState, action) {
     }
     // Update httpEndpoint based on node validation/change
     case types.VALIDATE_NODE_SUCCESS: {
-      const blockchain = find(blockchains, { chainId: action.payload.info.chain_id });
-      const { account, authorization } = action.payload.settings;
-
+      const { account, authorization, blockchain } = action.payload.settings;
+      debugger
       return Object.assign({}, state, {
         authorization: [
           account,

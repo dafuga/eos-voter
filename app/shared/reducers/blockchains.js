@@ -13,6 +13,8 @@ const initialState = [
       "proposals",
       "regproxyinfo"
     ],
+    "supportedFeatures": [
+    ],
     "symbol": "EOS",
     "testnet": false
   },
@@ -23,6 +25,8 @@ const initialState = [
     "name": "Jungle Testnet (EOS)",
     "node": "http://jungle.cryptolions.io:18888",
     "supportedContracts": [
+    ],
+    "supportedFeatures": [
     ],
     "symbol": "EOS",
     "testnet": true
@@ -35,6 +39,8 @@ const initialState = [
     "node": "https://kylin.eoscanada.com:443",
     "supportedContracts": [
     ],
+    "supportedFeatures": [
+    ],
     "symbol": "EOS",
     "testnet": true
   },
@@ -45,6 +51,8 @@ const initialState = [
     "name": "Insights Mainnet",
     "node": "https://ireland-history.insights.network",
     "supportedContracts": [
+    ],
+    "supportedFeatures": [
     ],
     "symbol": "INSTAR",
     "testnet": true
@@ -57,6 +65,8 @@ const initialState = [
     "node": "https://telos.greymass.com",
     "supportedContracts": [
     ],
+    "supportedFeatures": [
+    ],
     "symbol": "TLOS",
     "testnet": true
   },
@@ -68,10 +78,12 @@ const initialState = [
     "node": "https://api.eos.miami:17441",
     "supportedContracts": [
     ],
+    "supportedFeatures": [
+    ],
     "symbol": "TLOS",
     "testnet": true
   }
-];
+]
 
 export default function blockchains(state = initialState, action) {
   switch (action.type) {

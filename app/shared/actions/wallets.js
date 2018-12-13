@@ -8,6 +8,8 @@ import { decrypt, encrypt, setWalletMode } from './wallet';
 import EOSAccount from '../utils/EOS/Account';
 import eos from './helpers/eos';
 
+import { find } from 'lodash';
+
 const ecc = require('eosjs-ecc');
 const CryptoJS = require('crypto-js');
 
@@ -148,7 +150,7 @@ export function removeWallet(account, authorization) {
 
 export function useWallet(account, authorization) {
   return (dispatch: () => void, getState) => {
-    const { wallet, wallets } = getState();
+    const { wallet, wallets, blockchains } = getState();
     // Find the wallet by account name + authorization
     let newWallet = find(wallets, { account, authorization });
     // If the wallet doesn't match both, try just account name
@@ -162,9 +164,11 @@ export function useWallet(account, authorization) {
     // Set the wallet mode configuration
     dispatch(setWalletMode(newWallet.mode));
     // Update the settings for the current account
+    const blockchain = find(blockchains, { chainId: wallet.chainId });
     dispatch(setSettings({
       account,
-      authorization
+      authorization,
+      blockchain
     }));
     if (newWallet.mode !== 'cold') {
       // Update the account in local state

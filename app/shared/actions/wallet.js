@@ -225,7 +225,7 @@ export function unlockWallet(password, useWallet = false) {
 }
 
 export function setWalletMode(walletMode) {
-  return (dispatch: () => void) => {
+  return (dispatch: () => void,  getState) => {
     // Set the wallet mode
     dispatch(setSetting('walletMode', walletMode));
     switch (walletMode) {
