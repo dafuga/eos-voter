@@ -53,7 +53,7 @@ class GlobalModalAccountImportLedger extends Component<Props> {
     } = this.props;
     selected.forEach((auth) => {
       const [account, authorization, pubkey, path] = auth.split('@');
-      actions.importWallet(account, authorization, settings.blockchain, false, false, 'ledger', pubkey, path);
+      actions.importWallet(account, authorization, false, false, 'ledger', pubkey, path);
     });
     if (this.props.onComplete) {
       // Callback with the first account

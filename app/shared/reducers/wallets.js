@@ -24,8 +24,7 @@ export default function wallets(state = initialState, action) {
     case types.PREPARE_WALLET_CONVERT_LEDGER: {
       const [toModify, others] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.authorization,
-        blockchain: action.payload.blockchain
+        authorization: action.payload.authorization
       });
       // If the wallet is found
       if (toModify.length) {
@@ -45,8 +44,7 @@ export default function wallets(state = initialState, action) {
     case types.PREPARE_WALLET_CONVERT_LEDGER_COMPLETE: {
       const [toModify, others] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.authorization,
-        blockchain: action.payload.blockchain
+        authorization: action.payload.authorization
       });
       // If the wallet is found
       if (toModify.length) {
@@ -68,8 +66,7 @@ export default function wallets(state = initialState, action) {
     case types.PREPARE_WALLET_CONVERT_LEDGER_ABORT: {
       const [toModify, others] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.authorization,
-        blockchain: action.payload.blockchain
+        authorization: action.payload.authorization
       });
       // If the wallet is found
       if (toModify.length) {
@@ -89,16 +86,14 @@ export default function wallets(state = initialState, action) {
     case types.REMOVE_WALLET: {
       const [, other] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.authorization,
-        blockchain: action.payload.blockchain
+        authorization: action.payload.authorization
       });
       return other;
     }
     case types.UPGRADE_WALLET: {
       const [current, other] = partition(state, {
         account: action.payload.account,
-        authorization: action.payload.oldAuthorization,
-        blockchain: action.payload.blockchain
+        authorization: action.payload.oldAuthorization
       });
       if (current.length > 0) {
         const modified = Object.assign({}, current[0]);

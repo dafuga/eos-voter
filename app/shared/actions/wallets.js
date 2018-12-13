@@ -111,7 +111,7 @@ export function importWallet(
       payload: {
         account,
         accountData,
-        blockchain: connection.chainKey,
+        chainId: connection.chainId,
         authorization,
         data,
         mode,

@@ -36,7 +36,7 @@ class GlobalModalAccountImportHot extends Component<Props> {
     } = this.props;
     selected.forEach((auth) => {
       const [account, authorization] = auth.split('@');
-      actions.importWallet(account, authorization, settings.blockchain, value, password);
+      actions.importWallet(account, authorization, value, password);
     });
     this.props.onClose();
   }
