@@ -40,6 +40,7 @@ class GlobalAccountDropdown extends Component<Props> {
       return false;
     }
     const options = wallets
+      .filter(w => (w.chainId === settings.blockchain && settings.blockchain._id))
       .filter(w => (w.account !== wallet.account || w.authorization !== wallet.authorization))
       .sort((a, b) => a.account > b.account)
       .map((w) => {
