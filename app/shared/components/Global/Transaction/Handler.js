@@ -11,7 +11,10 @@ import GlobalTransactionMessageUnsignedDownload from './Message/Unsigned/Downloa
 
 export default class GlobalTransactionHandler extends Component<Props> {
   componentWillUnmount = () => {
-    this.props.actions.clearSystemState();
+    const { clearSystemState } = this.props.actions;
+    if (clearSystemState) {
+      clearSystemState();
+    }
   }
 
   render() {
