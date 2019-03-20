@@ -53,7 +53,7 @@ class GlobalBlockchainDropdown extends PureComponent<Props> {
     const options = blockchains
       .filter(b => (
         (
-          (displayTestNetworks && b.testnet)
+          (true && b.testnet)
           || !b.testnet
         )
         && b.chainId !== blockchain.chainId
