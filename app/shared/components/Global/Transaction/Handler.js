@@ -15,7 +15,7 @@ export default class GlobalTransactionHandler extends Component<Props> {
     if (clearSystemState) {
       clearSystemState();
     }
-  }
+  };
 
   render() {
     const {
