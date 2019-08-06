@@ -43,7 +43,6 @@ export default class EOSAccountStats {
     return totalStaked.minus(this.totalStakedToSelf());
   }
 
-
   refundDate() {
     const {
       refund_request
