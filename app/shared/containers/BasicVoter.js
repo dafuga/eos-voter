@@ -130,6 +130,7 @@ class BasicVoterContainer extends Component<Props> {
       getConstants();
       getGlobals();
       getInfo();
+      actions.getTable('eosio', settings.account, 'delband');
     }
   }
 
